@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour {
 	public float health=10;
 	public int score=100;
 	public int showDamageForFrames = 2;
+	public float powerUpDropChance = 1f;
 	public bool _____________;
 	public Color[] originalColors;
 	public Material[] materials;
@@ -63,28 +64,22 @@ public class Enemy : MonoBehaviour {
 		switch (other.tag) {
 		case "ProjectileHero":
 			Projectile p = other.GetComponent<Projectile>();
-			//Enemies don't take damage unless they're onscreen
-			//This stops the player from shooting them before they are visible
 			bounds.center = transform.position + boundsCenterOffset;
 			if (bounds.extents == Vector3.zero || Utils.ScreenBoundsCheck(bounds, BoundsTest.offScreen) != Vector3.zero) {
 				Destroy(other);
 				break;
 			}
-			//Hurt this enemy
-			ShowDamage();
-			//Get the damage amount from the Projectile.type & Main.W_DEFS 
+		
+			ShowDamage(); 
 			health -= Main.W_DEFS[p.type].damageOnHit;
 			if (health <= 0) {
-				//Tell the Main singleton that this ship has been destroyed
 				Main.S.ShipDestroyed(this);
-				//Destroy this enemy
 				Destroy(this.gameObject);
 			}
 			Destroy(other);
 			break;
 		}
 	}
-	// Use this for initialization
 	void Start () {
 	
 	}

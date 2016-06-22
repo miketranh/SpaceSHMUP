@@ -4,14 +4,13 @@ using System.Collections.Generic;
 
 
 public enum BoundsTest {
-	center,			// is the center of the gameObject on screen?
-	onScreen,		// are bounds entirely on screen
-	offScreen 		//are bounds entirely off screen
+	center,			
+	onScreen,		
+	offScreen 		
 }
 
 public class Utils : MonoBehaviour
 {
-	// create bounds that expand to hold the two bounds passed in
 	public static Bounds BoundsUnion( Bounds b0, Bounds b1) {
 		if (b0.size == Vector3.zero && b1.size != Vector3.zero) {
 			return (b1);
@@ -21,7 +20,6 @@ public class Utils : MonoBehaviour
 			return (b0);
 		}
 
-		// else combine them
 		b0.Encapsulate (b1.min);
 		b0.Encapsulate (b1.max);
 		return (b0);
@@ -202,6 +200,16 @@ public class Utils : MonoBehaviour
 	}
 	public static GameObject FindTaggedParent(Transform t){
 		return(FindTaggedParent (t.gameObject));
+	}
+	static public Material[] GetAllMaterials(GameObject go) {
+		List<Material>mats = new List<Material>();
+		if (go.renderer != null) {
+			mats.Add(go.renderer.material);
+		}
+		foreach(Transform t in go.transform) {
+			mats.AddRange(GetAllMaterials(t.gameObject));
+		}
+		return(mats.ToArray());
 	}
 }// End of Util Class
 
