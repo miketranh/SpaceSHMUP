@@ -26,8 +26,7 @@ public class Utils : MonoBehaviour
 		b0.Encapsulate (b1.max);
 		return (b0);
 	}
-
-
+	
 	public static Bounds CombineBoundsOfChildren(GameObject go) 
 	{
 		Bounds b = new Bounds (Vector3.zero, Vector3.zero);
@@ -191,9 +190,19 @@ public class Utils : MonoBehaviour
 		return (Vector3.zero);  // if we get here something went wrong
 	
 	} // end BoundsInBoundsCheck
-	
-	
-	
+
+	public static GameObject FindTaggedParent(GameObject go){
+		if (go.tag != "Untagged") {
+			return(go);
+		}
+		if (go.transform.parent == null) {
+			return(null);
+		}
+		return(FindTaggedParent (go.transform.parent.gameObject));
+	}
+	public static GameObject FindTaggedParent(Transform t){
+		return(FindTaggedParent (t.gameObject));
+	}
 }// End of Util Class
 
 
