@@ -15,12 +15,10 @@ public class Hero : MonoBehaviour {
 	private float	_shieldLevel = 1;
 
 	public Weapon[] weapons;
-
-
+	
 	public bool	_____________________;
 
 	public Bounds bounds;
-
 	public delegate void WeaponFireDelegate();
 	public WeaponFireDelegate fireDelegate;
 
